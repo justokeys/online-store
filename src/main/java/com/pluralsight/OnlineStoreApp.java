@@ -1,12 +1,10 @@
 package com.pluralsight;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.invoke.SwitchPoint;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class OnlineStoreApp {
@@ -14,10 +12,13 @@ public class OnlineStoreApp {
     static ArrayList<Products> forSale = new ArrayList<>();
     static ArrayList<Products> sold = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         getInventory();
+        boolean appRunning = true;
 
+
+        while (appRunning) {
         System.out.println("                ----- MacroCenter -----");
         System.out.println("" +
                 "      ___           ___           ___           ___     \n" +
@@ -32,10 +33,7 @@ public class OnlineStoreApp {
                 "    ╲:╲__╲        ╲::╱  ╱       ╲:╲__╲        ╲::╱  ╱   \n" +
                 "     ╲╱__╱         ╲╱__╱         ╲╱__╱         ╲╱__╱    ");
 
-        boolean appRunning = true;
 
-
-        while (appRunning) {
             System.out.println("""
                     --- Select an Option ---
                     1 - Display Products
@@ -117,7 +115,7 @@ public class OnlineStoreApp {
     }
 
     // Displays all items we currently for sale
-    public static void displayProducts() {
+    public static void displayProducts() throws InterruptedException {
 
         boolean appRunning = true;
 
@@ -164,7 +162,7 @@ public class OnlineStoreApp {
                     searchAndFilter();
                     break;
                 case 2:
-                     addToCart();
+                    addToCart();
                     break;
 
                 case 3:
@@ -240,19 +238,15 @@ public class OnlineStoreApp {
         }
 
 
-
-
-
-
     }
 
-    public static void sortbyPrice(){
-       boolean appRunning = true;
+    public static void sortbyPrice() {
+        boolean appRunning = true;
 
         while (appRunning)
 
 
-        System.out.println("Enter price range minimum");
+            System.out.println("Enter price range minimum");
         double min = thescanner.nextDouble();
         System.out.println("Enter price range maximum");
         double max = thescanner.nextDouble();
@@ -260,68 +254,88 @@ public class OnlineStoreApp {
 
         for (Products product : forSale) {
 
-            if (product.getPrice() >= min && product.getPrice() <= max){
+            if (product.getPrice() >= min && product.getPrice() <= max) {
                 System.out.printf("SKU: %s | %s | %s | %.2f\n", product.getsKU(), product.getProductName(), product.getDepartment(), product.getPrice());
 
             }
         }
 
 
-
     }
 
-    public static void addToCart(){
-        System.out.print(
-                """
-                        ======================================================================
-                           *                                                       *
-                        ======================================================================
-                         Price      | Product Name                   | Department     | SKU
-                        ----------------------------------------------------------------------
-                        """
-        );
+    public static void addToCart() throws InterruptedException {
 
-        for (Products product : forSale) {
-            System.out.printf("SKU: %s | %s | %s | %.2f\n", product.getsKU(), product.getProductName(), product.getDepartment(), product.getPrice());
+        boolean appRunning = true;
+        while(appRunning) {
+
+            Thread.sleep(1500);
+
+
+            System.out.print(
+                    """
+                            ======================================================================
+                               *                                                       *
+                            ======================================================================
+                             Price      | Product Name                   | Department     | SKU
+                            ----------------------------------------------------------------------
+                            """
+            );
+
+            for (Products product : forSale) {
+                System.out.printf("SKU: %s | %s | %s | %.2f\n", product.getsKU(), product.getProductName(), product.getDepartment(), product.getPrice());
+
+            }
+            System.out.println(
+                    """
+                            ----------------------------------------------------------------------                   
+                            ======================================================================
+                            """
+            );
+            System.out.println("""
+                    
+                    =========================================
+                                ADD TO CART
+                    =========================================
+                    TO ADD an Item enter SKU number 
+                    
+                    Return to menu Press ( X ) 
+                    =========================================
+                    Enter SKU:\s""");
+            String userInput = thescanner.nextLine();
+
+            if(userInput.equalsIgnoreCase("x")){
+
+                appRunning = false;
+            }
+
+            for(Products itemPicked : forSale){
+
+                if(userInput.equalsIgnoreCase(itemPicked.getsKU())){
+
+                    sold.add(itemPicked);
+
+
+
+                    System.out.println(itemPicked.getProductName() + " added to cart");
+
+
+                }
+
+
+
+
+
+
+            }
+
 
         }
-        System.out.println(
-                """
-                        ----------------------------------------------------------------------                   
-                        ======================================================================
-                        """
-        );
-        System.out.println("""
-                    
-                    =========================================
-                             PRODUCT INVENTORY MENU
-                    =========================================
-                    What would you like to do next?
-                    
-                    1 - Search or Filter Products
-                    2 - Add a Product to Cart
-                    3 - Go Back to Main Menu
-                    =========================================
-                    Enter command:\s""");
-        int userInput = thescanner.nextInt();
-
-
-
-
-
-
-
 
 
     }
 
 
-
-
-
-
-
-    }
+}
 
 
 
