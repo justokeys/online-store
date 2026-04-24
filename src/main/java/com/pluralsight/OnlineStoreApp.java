@@ -334,6 +334,18 @@ public class OnlineStoreApp {
 
     }
 
+    public static void displayCart(){
+        for(Products inCart : sold){
+                System.out.printf("SKU: %s | %s | %s | %.2f\n", inCart.getsKU(), inCart.getProductName(), inCart.getDepartment(), inCart.getPrice());
+
+            }
+        }
+
+
+
+
+
+
 
 }
 
