@@ -50,7 +50,7 @@ public class OnlineStoreApp {
                     displayProducts();
                     break;
                 case 2:
-                    //displayCart();
+                    displayCart();
                     break;
                 case 3:
                     System.out.println("Thank you visiting The MacroCenter");
@@ -335,11 +335,22 @@ public class OnlineStoreApp {
     }
 
     public static void displayCart(){
+        System.out.print(
+                """
+                        ======================================================================
+                           *                    MACROCENTER CART                 *
+                        ======================================================================
+                         Price      | Product Name                   | Department     | SKU
+                        ----------------------------------------------------------------------
+                        """
+        );
         for(Products inCart : sold){
                 System.out.printf("SKU: %s | %s | %s | %.2f\n", inCart.getsKU(), inCart.getProductName(), inCart.getDepartment(), inCart.getPrice());
 
             }
         }
+
+
 
 
 
